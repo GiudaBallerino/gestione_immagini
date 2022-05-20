@@ -27,6 +27,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       //theme: , //todo default theme
       //darkTheme: , //todo dark theme
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
     );
   }
