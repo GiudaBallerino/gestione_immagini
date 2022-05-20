@@ -10,6 +10,6 @@ Img _$ImgFromJson(Map<String, dynamic> json) => Img(
   path: json['path'] as String,
 );
 
-Map<String, dynamic> _$TodoToJson(Img instance) => <String, dynamic>{
+Map<String, dynamic> _$ImgToJson(Img instance) => <String, dynamic>{
   'path': instance.path,
 };

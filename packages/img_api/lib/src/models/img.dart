@@ -39,8 +39,8 @@ class Img extends Equatable {
   /// Deserializes the given [JsonMap] into a [Img].
   static Img fromJson(JsonMap json) => _$ImgFromJson(json);
 
-  /// Converts this [Todo] into a [JsonMap].
-  JsonMap toJson() => _$TodoToJson(this);
+  /// Converts this [Img] into a [JsonMap].
+  JsonMap toJson() => _$ImgToJson(this);
 
   @override
   List<Object> get props => [path];
