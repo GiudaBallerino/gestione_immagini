@@ -1,6 +1,9 @@
 // Flutter imports
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestione_immagini/gallery/gallery.dart';
+import 'package:img_api/img_api.dart';
+import 'package:local_storage_imgs_api/local_storage_imgs_api.dart';
 
 //Project imports
 import '../../gallery/view/gallery_page.dart';
@@ -33,7 +36,9 @@ class HomeView extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         key: const Key('homeView_addTodo_floatingActionButton'),
-        onPressed: () => {},
+        onPressed: () async => {
+          LocalStorageImgsApi(plugin: await SharedPreferences.getInstance()).saveImg(Img(path: r"C:\Users\loris\OneDrive - Università degli Studi di Verona\Desktop\photoshop\hitler-mussolini.jpg")),
+        },
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomAppBar(
