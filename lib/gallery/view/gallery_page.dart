@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestione_immagini/app/app.dart';
 import 'package:gestione_immagini/gallery/gallery.dart';
 import 'package:imgs_repository/imgs_repository.dart';
-import 'package:photo_view/photo_view.dart';
 
 class GalleryPage extends StatelessWidget {
   const GalleryPage({Key? key}) : super(key: key);
