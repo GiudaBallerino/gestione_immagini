@@ -252,6 +252,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
+  local_storage_tags_api:
+    dependency: "direct main"
+    description:
+      path: "packages/local_storage_tags_api"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   logging:
     dependency: transitive
     description:
@@ -350,13 +357,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
-  photo_view:
-    dependency: "direct main"
-    description:
-      name: photo_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.13.0"
   platform:
     dependency: transitive
     description:
@@ -541,6 +541,13 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/tag_api"
+      relative: true
+    source: path
+    version: "0.0.1"
+  tags_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/tags_repository"
       relative: true
     source: path
     version: "0.0.1"

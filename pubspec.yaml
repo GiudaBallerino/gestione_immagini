@@ -16,16 +16,19 @@ dependencies:
     sdk: flutter
   flutter_services_binding: ^0.1.0
   intl: ^0.17.0
+  crop_image: ^1.0.2
   local_storage_imgs_api:
     path: packages/local_storage_imgs_api
+  local_storage_tags_api:
+    path: packages/local_storage_tags_api
   img_api:
     path: packages/img_api
   tag_api:
     path: packages/tag_api
   imgs_repository:
     path: packages/imgs_repository
-  photo_view: ^0.13.0
-  crop_image: ^1.0.2
+  tags_repository:
+    path: packages/tags_repository
 
 dev_dependencies:
   bloc_test: ^9.0.1
