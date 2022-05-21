@@ -8,7 +8,7 @@ part of 'img.dart';
 
 Img _$ImgFromJson(Map<String, dynamic> json) => Img(
   path: json['path'] as String,
-  selections:  json['selections'] as List<model.Selection>,
+  selections: List.from(json['selections']).map((item)=>model.Selection.fromJson(item)).toList()
 );
 
 Map<String, dynamic> _$ImgToJson(Img instance) => <String, dynamic>{
