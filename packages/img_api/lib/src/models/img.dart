@@ -29,7 +29,7 @@ class Img extends Equatable {
 
   /// A list of unique selection.
   ///
-  /// Cannot be empty.
+  /// Can be empty.
   final List<model.Selection> selections;
 
   /// Returns a copy of this img with the given values updated.
@@ -52,5 +52,5 @@ class Img extends Equatable {
   JsonMap toJson() => _$ImgToJson(this);
 
   @override
-  List<Object> get props => [path,selections];
+  List<Object> get props => [path, selections];
 }
