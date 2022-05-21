@@ -39,7 +39,7 @@ class Tag extends Equatable {
 
   /// Returns a copy of this img with the given values updated.
   ///
-  /// {@macro todo}
+  /// {@macro tag}
   Tag copyWith({
     String? id,
     String? name,
