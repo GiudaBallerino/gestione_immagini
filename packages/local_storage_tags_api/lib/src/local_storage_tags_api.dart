@@ -26,7 +26,7 @@ class LocalStorageTagsApi extends TagApi {
   /// This is only exposed for testing and shouldn't be used by consumers of
   /// this library.
   @visibleForTesting
-  static const kTagsCollectionKey = '__imgs_collection_key__';
+  static const kTagsCollectionKey = '__tags_collection_key__';
 
   String? _getValue(String key) => _plugin.getString(key);
   Future<void> _setValue(String key, String value) =>
