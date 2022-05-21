@@ -14,6 +14,8 @@ dependencies:
   shared_preferences: ^2.0.7
   img_api:
     path: ../img_api
+  selection_api:
+    path: ../selection_api
 
 dev_dependencies:
   flutter_test:

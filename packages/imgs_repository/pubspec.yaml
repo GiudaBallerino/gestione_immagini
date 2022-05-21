@@ -9,6 +9,8 @@ environment:
 dependencies:
   img_api:
     path: ../img_api
+  selection_api:
+    path: ../selection_api
 
 dev_dependencies:
   mocktail: ^0.2.0

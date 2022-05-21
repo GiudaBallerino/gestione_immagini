@@ -25,10 +25,13 @@ dependencies:
     path: packages/img_api
   tag_api:
     path: packages/tag_api
+  selection_api:
+    path: packages/selection_api
   imgs_repository:
     path: packages/imgs_repository
   tags_repository:
     path: packages/tags_repository
+
 
 dev_dependencies:
   bloc_test: ^9.0.1
