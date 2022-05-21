@@ -6,6 +6,7 @@ import 'package:img_api/img_api.dart';
 import 'package:local_storage_imgs_api/local_storage_imgs_api.dart';
 
 //Project imports
+import '../../edit_tag/view/edit_tag_page.dart';
 import '../../gallery/view/gallery_page.dart';
 import '../cubit/home_cubit.dart';
 
@@ -31,7 +32,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [GalleryPage(),GalleryPage(),], //todo  SettingsPage
+        children: const [GalleryPage(),EditTagPage(),],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
