@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         key: const Key('homeView_addTodo_floatingActionButton'),
         onPressed: () async => {
-          LocalStorageImgsApi(plugin: await SharedPreferences.getInstance()).saveImg(Img(path: r"C:\Users\loris\OneDrive - Università degli Studi di Verona\Desktop\photoshop\hitler-mussolini.jpg")),
+          //LocalStorageImgsApi(plugin: await SharedPreferences.getInstance()).saveImg(Img(path: r"C:\Users\loris\OneDrive - Università degli Studi di Verona\Desktop\photoshop\hitler-mussolini.jpg")),
         },
         child: const Icon(Icons.add),
       ),
