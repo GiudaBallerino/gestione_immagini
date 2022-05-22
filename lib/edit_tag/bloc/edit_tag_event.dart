@@ -34,5 +34,10 @@ class EditTagNameChanged extends EditTagEvent {
 }
 
 class EditTagSubmitted extends EditTagEvent {
-  const EditTagSubmitted();
+  const EditTagSubmitted(this.tag);
+
+  final Tag tag;
+
+  @override
+  List<Object> get props => [tag];
 }

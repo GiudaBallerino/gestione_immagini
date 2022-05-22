@@ -14,7 +14,7 @@ class EditTagBloc extends Bloc<EditTagEvent, EditTagState> {
     on<EditTagDeleted>(_onTagDeleted);
     on<EditTagUndoDeletionRequested>(_onUndoDeletionRequested);
     //on<EditTagNameChanged>(_onNameChanged);
-    //on<EditTagSubmitted>(_onSubmitted);
+    on<EditTagSubmitted>(_onSubmitted);
   }
 
   final TagsRepository _tagsRepository;
@@ -67,20 +67,17 @@ class EditTagBloc extends Bloc<EditTagEvent, EditTagState> {
   //   emit(state.copyWith(name: event.name));
   // }
   //
-  // Future<void> _onSubmitted(
-  //     EditTagSubmitted event,
-  //     Emitter<EditTagState> emit,
-  //     ) async {
-  //   emit(state.copyWith(status: EditTagStatus.loading));
-  //   final tag = (state.initialTag ?? Tag(name: '')).copyWith(
-  //     name: state.name,
-  //   );
-  //
-  //   try {
-  //     await _tagsRepository.saveTag(tag);
-  //     emit(state.copyWith(status: EditTagStatus.success));
-  //   } catch (e) {
-  //     emit(state.copyWith(status: EditTagStatus.failure));
-  //   }
-  // }
+  Future<void> _onSubmitted(
+      EditTagSubmitted event,
+      Emitter<EditTagState> emit,
+      ) async {
+    emit(state.copyWith(status: ()=> EditTagStatus.loading));
+
+    try {
+      await _tagsRepository.saveTag(event.tag);
+      emit(state.copyWith(status: ()=> EditTagStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: ()=> EditTagStatus.failure));
+    }
+  }
 }
