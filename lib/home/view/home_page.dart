@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestione_immagini/gallery/gallery.dart';
 
 //Project imports
-import '../../edit_tag/view/edit_tag_page.dart';
 import '../../gallery/view/gallery_page.dart';
+import '../../settings/view/settings_page.dart';
 import '../cubit/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
@@ -30,15 +30,10 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [GalleryPage(),EditTagPage(),],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        key: const Key('homeView_addTodo_floatingActionButton'),
-        onPressed: () async => {
-          //LocalStorageImgsApi(plugin: await SharedPreferences.getInstance()).saveImg(Img(path: r"C:\Users\loris\OneDrive - Università degli Studi di Verona\Desktop\photoshop\hitler-mussolini.jpg")),
-        },
-        child: const Icon(Icons.add),
+        children: const [
+          GalleryPage(),
+          SettingsPage(),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -48,12 +43,12 @@ class HomeView extends StatelessWidget {
             _HomeTabButton(
               groupValue: selectedTab,
               value: HomeTab.gallery,
-              icon: const Icon(Icons.list_rounded),
+              icon: const Icon(Icons.collections),
             ),
             _HomeTabButton(
               groupValue: selectedTab,
               value: HomeTab.settings,
-              icon: const Icon(Icons.show_chart_rounded),
+              icon: const Icon(Icons.settings),
             ),
           ],
         ),
