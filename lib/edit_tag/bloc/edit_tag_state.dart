@@ -2,12 +2,12 @@ part of 'edit_tag_bloc.dart';
 
 enum EditTagStatus { initial, loading, success, failure }
 
-// extension EditTagStatusX on EditTagStatus {
-//   bool get isLoadingOrSuccess => [
-//     EditTagStatus.loading,
-//     EditTagStatus.success,
-//   ].contains(this);
-// }
+extension EditTagStatusX on EditTagStatus {
+  bool get isLoadingOrSuccess => [
+    EditTagStatus.loading,
+    EditTagStatus.success,
+  ].contains(this);
+}
 
 class EditTagState extends Equatable {
   const EditTagState({
