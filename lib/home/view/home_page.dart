@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestione_immagini/gallery/gallery.dart';
-import 'package:img_api/img_api.dart';
-import 'package:local_storage_imgs_api/local_storage_imgs_api.dart';
 
 //Project imports
 import '../../edit_tag/view/edit_tag_page.dart';
