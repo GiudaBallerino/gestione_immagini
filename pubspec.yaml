@@ -31,6 +31,8 @@ dependencies:
     path: packages/imgs_repository
   tags_repository:
     path: packages/tags_repository
+  file_picker: ^4.5.1
+  path_provider: ^2.0.10
 
 
 dev_dependencies:
