@@ -7,8 +7,12 @@ abstract class GalleryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GallerySubscriptionRequested extends GalleryEvent {
-  const GallerySubscriptionRequested();
+class GalleryImgsSubscriptionRequested extends GalleryEvent {
+  const GalleryImgsSubscriptionRequested();
+}
+
+class GalleryTagsSubscriptionRequested extends GalleryEvent {
+  const GalleryTagsSubscriptionRequested();
 }
 
 class GalleryImgDeleted extends GalleryEvent {
@@ -24,11 +28,55 @@ class GalleryUndoDeletionRequested extends GalleryEvent {
   const GalleryUndoDeletionRequested();
 }
 
-class GalleryFilterChanged extends GalleryEvent {
-  const GalleryFilterChanged(this.filter);
+class GalleryUpdateActualIndex extends GalleryEvent {
+  const GalleryUpdateActualIndex(this.index);
 
-  final GalleryFilter filter;
+  final int index;
 
   @override
-  List<Object> get props => [filter];
+  List<Object> get props => [index];
+}
+
+class GalleryUpdateCurrentlyDraggedIndex extends GalleryEvent {
+  const GalleryUpdateCurrentlyDraggedIndex(this.index);
+
+  final int index;
+
+  @override
+  List<Object> get props => [index];
+}
+
+class GalleryUpdatePoints extends GalleryEvent {
+  const GalleryUpdatePoints(this.points);
+
+  final List<Offset> points;
+
+  @override
+  List<Object> get props => [points];
+}
+
+class GalleryUpdatePoint extends GalleryEvent {
+  const GalleryUpdatePoint(this.points, this.index, this.point);
+
+  final List<Offset> points;
+  final int index;
+  final Offset point;
+
+  @override
+  List<Object> get props => [points];
+}
+
+class GalleryImgSelectionStart extends GalleryEvent {
+  const GalleryImgSelectionStart();
+}
+
+class GalleryImgSelectionEnd extends GalleryEvent {
+  const GalleryImgSelectionEnd();
+}
+
+class GallerySelectionSubmitted extends GalleryEvent {
+  const GallerySelectionSubmitted(this.path, this.selection);
+
+  final String path;
+  final Selection selection;
 }
