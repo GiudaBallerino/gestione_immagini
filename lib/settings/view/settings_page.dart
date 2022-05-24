@@ -18,7 +18,9 @@ class SettingsPage extends StatelessWidget {
       create: (context) => SettingsBloc(
         tagsRepository: context.read<TagsRepository>(),
         imgsRepository: context.read<ImgsRepository>(),
-      )..add(const TagSubscriptionRequested())..add(const ImgSubscriptionRequested()),
+      )
+        ..add(const TagSubscriptionRequested())
+        ..add(const ImgSubscriptionRequested()),
       child: const SettingsView(),
     );
   }
@@ -29,6 +31,7 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: MultiBlocListener(
         listeners: [
@@ -75,7 +78,7 @@ class SettingsView extends StatelessWidget {
           ),
           BlocListener<SettingsBloc, SettingsState>(
             listenWhen: (previous, current) =>
-            previous.lastDeletedImg != current.lastDeletedImg &&
+                previous.lastDeletedImg != current.lastDeletedImg &&
                 current.lastDeletedImg != null,
             listener: (context, state) {
               final deletedImg = state.lastDeletedImg!;
@@ -84,8 +87,8 @@ class SettingsView extends StatelessWidget {
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   SnackBar(
-                    content:
-                    Text("l'immagine ${deletedImg.path.split("\\").last} è stata eliminata"),
+                    content: Text(
+                        "l'immagine ${deletedImg.path.split("\\").last} è stata eliminata"),
                     action: SnackBarAction(
                       label: "undo",
                       onPressed: () {
@@ -108,87 +111,162 @@ class SettingsView extends StatelessWidget {
               } else if (state.status != SettingsStatus.success) {
                 return const SizedBox();
               } else {
+                ScrollController _tagScrollController=ScrollController();
+                ScrollController _imgScrollController=ScrollController();
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TagListSection(
-                        tags: state.tags,
-                        onDeleted: (tag) {
-                          context.read<SettingsBloc>().add(
-                            TagDeleted(tag),
-                          );
-                        },
-                        onSubmit: (name) {
-                          context
-                              .read<SettingsBloc>()
-                              .add(TagSubmitted(Tag(name: name)));
-                        },
+                      SizedBox(
+                        width: size.width * 0.5 - 60,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'Lista dei tag:',
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                controller: _tagScrollController,
+                                child: TagListSection(
+                                  tags: state.tags,
+                                  onDeleted: (tag) {
+                                    context.read<SettingsBloc>().add(
+                                      TagDeleted(tag),
+                                    );
+                                  },
+                                  onSubmit: (name) {
+                                    context
+                                        .read<SettingsBloc>()
+                                        .add(TagSubmitted(Tag(name: name)));
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      ImgListSection(
-                        imgs: state.imgs,
-                        onDeleted: (img) {
-                          context.read<SettingsBloc>().add(
-                            ImgDeleted(img),
-                          );
-                        },
-                        onSubmit: (path) {
-                          context
-                              .read<SettingsBloc>()
-                              .add(ImgSubmitted(Img(path: path, selections: [])));
-                        },
+                      SizedBox(
+                        width: size.width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'Lista delle immagini:',
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                controller: _imgScrollController,
+                                child: ImgListSection(
+                                  imgs: state.imgs,
+                                  onDeleted: (img) {
+                                    context.read<SettingsBloc>().add(
+                                      ImgDeleted(img),
+                                    );
+                                  },
+                                  onSubmit: (path) {
+                                    context.read<SettingsBloc>().add(ImgSubmitted(
+                                        Img(path: path, selections: [])));
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 );
               }
             }
+            ScrollController _tagScrollController=ScrollController();
+            ScrollController _imgScrollController=ScrollController();
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TagListSection(
-                    tags: state.tags,
-                    onDeleted: (tag) {
-                      context.read<SettingsBloc>().add(
-                            TagDeleted(tag),
-                          );
-                    },
-                    onSubmit: (name) {
-                      context
-                          .read<SettingsBloc>()
-                          .add(TagSubmitted(Tag(name: name)));
-                    },
+                  SizedBox(
+                    width: size.width * 0.5 - 60,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            'Lista dei tag:',
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            controller: _tagScrollController,
+                            child: TagListSection(
+                              tags: state.tags,
+                              onDeleted: (tag) {
+                                context.read<SettingsBloc>().add(
+                                      TagDeleted(tag),
+                                    );
+                              },
+                              onSubmit: (name) {
+                                context
+                                    .read<SettingsBloc>()
+                                    .add(TagSubmitted(Tag(name: name)));
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  ImgListSection(
-                    imgs: state.imgs,
-                    onDeleted: (img) {
-                      context.read<SettingsBloc>().add(
-                            ImgDeleted(img),
-                          );
-                    },
-                    onSubmit: (path) {
-                      context
-                          .read<SettingsBloc>()
-                          .add(ImgSubmitted(Img(path: path, selections: [])));
-                    },
+                  SizedBox(
+                    width: size.width * 0.5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            'Lista delle immagini:',
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            controller: _imgScrollController,
+                            child: ImgListSection(
+                              imgs: state.imgs,
+                              onDeleted: (img) {
+                                context.read<SettingsBloc>().add(
+                                      ImgDeleted(img),
+                                    );
+                              },
+                              onSubmit: (path) {
+                                context.read<SettingsBloc>().add(ImgSubmitted(
+                                    Img(path: path, selections: [])));
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
             );
-            // return CupertinoScrollbar(
-            //   child: ListView(
-            //     children: [
-            //       for (final tag in state.tags)
-            //         InputChip(
-            //           label: Text(tag.name),
-            //           onDeleted: (){},
-            //         ),
-            //     ],
-            //   ),
-            // );
           },
         ),
       ),
