@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
@@ -22,10 +24,7 @@ class Selection extends Equatable {
   Selection({
     String? id,
     required this.tag,
-    required this.left,
-    required this.top,
-    required this.right,
-    required this.bottom,
+    required this.points,
   })  : assert(
   id == null || id.isNotEmpty,
   'id can not be null and should be empty',
@@ -45,22 +44,8 @@ class Selection extends Equatable {
   /// The top offset of the selection.
   ///
   /// Cannot be empty.
-  final double top;
+  final List<Offset> points;
 
-  /// The left offset of the selection.
-  ///
-  /// Cannot be empty.
-  final double left;
-
-  /// The right offset of the selection..
-  ///
-  /// Cannot be empty.
-  final double right;
-
-  /// The bottom offset of the selection.
-  ///
-  /// Cannot be empty.
-  final double bottom;
 
   /// Returns a copy of this selection with the given values updated.
   ///
@@ -68,18 +53,12 @@ class Selection extends Equatable {
   Selection copyWith({
     String? id,
     model.Tag? tag,
-    double? left,
-    double? top,
-    double? right,
-    double? bottom,
+    List<Offset>? points,
   }) {
     return Selection(
         id: id ?? this.id,
         tag: tag ?? this.tag,
-        left: left ?? this.left,
-        top: top ?? this.top,
-        right: right ?? this.right,
-        bottom: bottom ?? this.bottom,
+        points: points ?? this.points,
     );
   }
 
@@ -90,5 +69,5 @@ class Selection extends Equatable {
   JsonMap toJson() => _$SelectionToJson(this);
 
   @override
-  List<Object> get props => [id,tag, left, top, right, bottom];
+  List<Object> get props => [id,tag, points,];
 }

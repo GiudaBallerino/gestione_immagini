@@ -8,18 +8,12 @@ part of 'selection.dart';
 
 Selection _$SelectionFromJson(Map<String, dynamic> json) => Selection(
     id: json['id'] as String,
-    tag: json['tag'] as model.Tag,
-    left: json['left'] as double,
-    top: json['top'] as double,
-    right: json['right'] as double,
-    bottom: json['bottom'] as double,
+    tag: model.Tag.fromJson(json['tag']),
+    points: List.from(json['points']).map((item)=>Offset(item['dx'] as double ,item["dy"] as double)).toList(),
 );
 
 Map<String, dynamic> _$SelectionToJson(Selection instance) => <String, dynamic>{
   'id': instance.id,
   'tag': instance.tag,
-  'left': instance.left,
-  'top': instance.top,
-  'right': instance.right,
-  'bottom': instance.bottom,
+  'points': instance.points,
 };
