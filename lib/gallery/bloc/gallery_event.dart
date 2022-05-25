@@ -74,6 +74,14 @@ class GalleryImgSelectionEnd extends GalleryEvent {
   const GalleryImgSelectionEnd();
 }
 
+class GalleryTagSelectionStart extends GalleryEvent {
+  const GalleryTagSelectionStart();
+}
+
+class GalleryTagSelectionEnd extends GalleryEvent {
+  const GalleryTagSelectionEnd();
+}
+
 class GallerySelectionSubmitted extends GalleryEvent {
   const GallerySelectionSubmitted(this.path, this.selection);
 
