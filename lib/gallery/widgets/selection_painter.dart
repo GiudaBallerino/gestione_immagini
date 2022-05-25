@@ -37,11 +37,11 @@ class SelectionPainter extends CustomPainter {
 
       for (int i = 0; i < points.length; i++) {
         if (i + 1 == points.length) {
-          canvas.drawLine(points[i], points[0], paint);
+          canvas.drawLine(Offset(size.width*(points[i].dx/100),size.height*(points[i].dy/100)), Offset(size.width*(points[0].dx/100),size.height*(points[0].dy/100)), paint);
         } else {
-          canvas.drawLine(points[i], points[i + 1], paint);
+          canvas.drawLine(Offset(size.width*(points[i].dx/100),size.height*(points[i].dy/100)), Offset(size.width*(points[i+1].dx/100),size.height*(points[i+1].dy/100)), paint);
         }
-        canvas.drawCircle(points[i], 10, circlePaint);
+        canvas.drawCircle(Offset(size.width*(points[i].dx/100),size.height*(points[i].dy/100)), 10, circlePaint);
       }
     }
   }
