@@ -25,8 +25,10 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
     on<GalleryUpdateCurrentlyDraggedIndex>(_onUpdateCurrentlyDraggedIndex);
     on<GalleryUpdatePoints>(_onUpdatePoints);
     on<GalleryUpdatePoint>(_onUpdatePoint);
-    on<GalleryImgSelectionStart>(_onSelectionStart);
-    on<GalleryImgSelectionEnd>(_onSelectionEnd);
+    on<GalleryImgSelectionStart>(_onImgSelectionStart);
+    on<GalleryImgSelectionEnd>(_onImgSelectionEnd);
+    on<GalleryTagSelectionStart>(_onTagSelectionStart);
+    on<GalleryTagSelectionEnd>(_onTagSelectionEnd);
     on<GallerySelectionSubmitted>(_onSelectionSubmitted);
   }
 
@@ -122,18 +124,32 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
     emit(state.copyWith(points: () => tmp));
   }
 
-  void _onSelectionStart(
+  void _onImgSelectionStart(
     GalleryImgSelectionStart event,
     Emitter<GalleryState> emit,
   ) {
     emit(state.copyWith(selecting: () => true));
   }
 
-  void _onSelectionEnd(
+  void _onImgSelectionEnd(
     GalleryImgSelectionEnd event,
     Emitter<GalleryState> emit,
   ) {
     emit(state.copyWith(selecting: () => false));
+  }
+
+  void _onTagSelectionStart(
+      GalleryTagSelectionStart event,
+      Emitter<GalleryState> emit,
+      ) {
+    emit(state.copyWith(tagSelection: () => true));
+  }
+
+  void _onTagSelectionEnd(
+      GalleryTagSelectionEnd event,
+      Emitter<GalleryState> emit,
+      ) {
+    emit(state.copyWith(tagSelection: () => false));
   }
 
   Future<void> _onSelectionSubmitted(
