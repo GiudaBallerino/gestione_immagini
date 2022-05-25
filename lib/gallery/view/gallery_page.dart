@@ -41,7 +41,6 @@ class GalleryPage extends StatelessWidget {
 
 class GalleryView extends StatelessWidget {
   GalleryView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,45 +68,8 @@ class GalleryView extends StatelessWidget {
                       child: Icon(Icons.done),
                       onPressed: () {
                         context.read<GalleryBloc>().add(
-                              GallerySelectionSubmitted(
-                                state.images[state.actualIndex].path,
-                                Selection(
-                                  tag: state.tags.first,
-                                  points: state.points,
-                                ),
-                              ),
+                              GalleryTagSelectionStart(),
                             );
-                        context.read<GalleryBloc>().add(
-                              GalleryImgSelectionEnd(),
-                            );
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return SimpleDialog(
-                        //         title: Text('Scegli il tag'),
-                        //         children: <Widget>[
-                        //           for (final tag in state.tags)
-                        //             SimpleDialogOption(
-                        //               onPressed: () {
-                        //                 context.read<GalleryBloc>().add(
-                        //                       GallerySelectionSubmitted(
-                        //                         state.images[state.actualIndex]
-                        //                             .path,
-                        //                         Selection(
-                        //                           tag: tag,
-                        //                           right: state.actualSelection!.right,
-                        //                           left:  state.actualSelection!.left,
-                        //                           bottom:  state.actualSelection!.bottom,
-                        //                           top:  state.actualSelection!.top,
-                        //                         ),
-                        //                       ),
-                        //                     );
-                        //               },
-                        //               child: Text(tag.name),
-                        //             ),
-                        //         ],
-                        //       );
-                        //     });
                       },
                     )
                   ],
@@ -156,6 +118,47 @@ class GalleryView extends StatelessWidget {
                     );
                 },
               ),
+              BlocListener<GalleryBloc, GalleryState>(
+                listenWhen: (previous, current) =>
+                    previous.tagSelection != current.tagSelection,
+                listener: (context, state) {
+                  if (state.tagSelection) {
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return SimpleDialog(
+                          title: Text('Scegli il tag'),
+                          children: <Widget>[
+                            for (final tag in state.tags)
+                              SimpleDialogOption(
+                                onPressed: () {
+                                  context.read<GalleryBloc>().add(
+                                        GallerySelectionSubmitted(
+                                          state.images[state.actualIndex].path,
+                                          Selection(
+                                            tag: tag,
+                                            points: state.points,
+                                          ),
+                                        ),
+                                      );
+                                  context.read<GalleryBloc>().add(
+                                        GalleryImgSelectionEnd(),
+                                      );
+                                  context.read<GalleryBloc>().add(
+                                        GalleryTagSelectionEnd(),
+                                      );
+                                },
+                                child: Text(tag.name),
+                              ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ],
             child: BlocBuilder<GalleryBloc, GalleryState>(
               builder: (context, state) {
@@ -186,7 +189,7 @@ class GalleryView extends StatelessWidget {
                             );
                         context.read<GalleryBloc>().add(
                               GalleryUpdateActualIndex(
-                                  pageController.page!.toInt()),
+                                  pageController.page!.ceil()),
                             );
                         pageController.nextPage(
                             curve: _curve, duration: _animationDuration);
@@ -196,7 +199,7 @@ class GalleryView extends StatelessWidget {
                             );
                         context.read<GalleryBloc>().add(
                               GalleryUpdateActualIndex(
-                                  pageController.page!.toInt()),
+                                  pageController.page!.ceil()),
                             );
                         pageController.page;
                         pageController.previousPage(
@@ -219,24 +222,33 @@ class GalleryView extends StatelessWidget {
                                     );
                               }
                             : null,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: FileImage(
-                                File(
-                                  state.images[index].path,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Container(
+                            width: size.width,
+                            height: size.height,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: FileImage(
+                                  File(
+                                    state.images[index].path,
+                                  ),
                                 ),
+                                fit: BoxFit.contain,
                               ),
-                              fit: BoxFit.contain,
                             ),
-                          ),
-                          child: Stack(
-                            children: [
-                              for (final selection
-                                  in state.images[index].selections)
-                                FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: SizedBox(
+                            child: Stack(
+                              children: [
+                                // Image.file(
+                                //   File(state.images[index].path),
+                                //   key: _imgKey,
+                                //   width: size.width,
+                                //   height: size.height,
+                                //   fit: BoxFit.contain,
+                                // ),
+                                for (final selection
+                                    in state.images[index].selections) ...[
+                                  SizedBox(
                                     width: size.width,
                                     height: size.height,
                                     child: CustomPaint(
@@ -246,24 +258,41 @@ class GalleryView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
-                              if (state.selecting) ...[
-                                FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: GestureDetector(
+                                  // Positioned(
+                                  //   left: selection.points[0].dx,
+                                  //   top: selection.points[0].dy,
+                                  //   child: Tooltip(
+                                  //     message: selection.tag.name,
+                                  //     child: Container(
+                                  //       width: (selection.points[2].dx -
+                                  //               selection.points[0].dx)
+                                  //           .abs(),
+                                  //       height: (selection.points[2].dy -
+                                  //               selection.points[0].dy)
+                                  //           .abs(),
+                                  //       color: Colors.red.withOpacity(0.5),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                                if (state.selecting) ...[
+                                  GestureDetector(
                                     onPanStart: (DragStartDetails details) {
-                                      // get distance from points to check if is in circle
                                       int indexMatch = -1;
                                       for (int i = 0;
                                           i < state.points.length;
                                           i++) {
                                         double distance = sqrt(pow(
                                                 details.localPosition.dx -
-                                                    state.points[i].dx,
+                                                    size.width *
+                                                        (state.points[i].dx /
+                                                            100),
                                                 2) +
                                             pow(
                                                 details.localPosition.dy -
-                                                    state.points[i].dy,
+                                                    size.height *
+                                                        (state.points[i].dy /
+                                                            100),
                                                 2));
                                         if (distance <= 30) {
                                           indexMatch = i;
@@ -280,15 +309,16 @@ class GalleryView extends StatelessWidget {
                                     onPanUpdate: (DragUpdateDetails details) {
                                       if (state.currentlyDraggedIndex != -1) {
                                         context.read<GalleryBloc>().add(
-                                              GalleryUpdatePoints(
-                                                  List.from(state.points)),
-                                            );
-
-                                        context.read<GalleryBloc>().add(
                                               GalleryUpdatePoint(
                                                   state.points,
                                                   state.currentlyDraggedIndex,
-                                                  details.localPosition),
+                                                  Offset(
+                                                      details.localPosition.dx /
+                                                          size.width *
+                                                          100,
+                                                      details.localPosition.dy /
+                                                          size.height *
+                                                          100)),
                                             );
                                       }
                                     },
@@ -298,20 +328,21 @@ class GalleryView extends StatelessWidget {
                                                 -1),
                                           );
                                     },
-                                    child: SizedBox(
-                                      width: size.width,
-                                      height: size.height,
-                                      child: CustomPaint(
-                                        painter: SelectionPainter(
-                                          points: state.points,
-                                          clear: false,
+                                    child:Container(
+                                        width: size.width,
+                                        height: size.height,
+                                        //color: Colors.red,
+                                        child: CustomPaint(
+                                          painter: SelectionPainter(
+                                            points: state.points,
+                                            clear: false,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ]
-                            ],
+                                ]
+                              ],
+                            ),
                           ),
                         ),
                       );
