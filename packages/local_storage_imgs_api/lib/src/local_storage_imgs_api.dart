@@ -82,9 +82,9 @@ class LocalStorageImgsApi extends ImgApi {
       throw ImgNotFoundException();
     } else {
       imgs[imgIndex].selections.add(selection);
-      _imgStreamController.add(imgs);
-      return _setValue(kImgsCollectionKey, json.encode(imgs));
     }
+    _imgStreamController.add(imgs);
+    return _setValue(kImgsCollectionKey, json.encode(imgs));
   }
 
   @override
