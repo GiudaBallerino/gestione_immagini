@@ -9,9 +9,10 @@ class GalleryState extends Equatable {
     this.tags = const [],
     this.actualIndex = 0,
     this.currentlyDraggedIndex = -1,
-    this.points= const [Offset(500,500),Offset(600,500), Offset(600,600),Offset(500,600)],
+    this.points= const [Offset(50,50),Offset(60,50), Offset(60,60),Offset(50,60)],
     this.lastDeletedImg,
     this.selecting = false,
+    this.tagSelection = false,
   });
 
   final GalleryStatus status;
@@ -20,6 +21,7 @@ class GalleryState extends Equatable {
   final List<Tag> tags;
 
   final bool selecting;
+  final bool tagSelection;
   final int actualIndex;
   final int currentlyDraggedIndex;
   final List<Offset> points;
@@ -35,6 +37,7 @@ class GalleryState extends Equatable {
     List<Offset> Function()? points,
     Img? Function()? lastDeletedImg,
     bool Function()? selecting,
+    bool Function()? tagSelection,
   }) {
     return GalleryState(
       status: status != null ? status() : this.status,
@@ -48,6 +51,7 @@ class GalleryState extends Equatable {
       lastDeletedImg:
           lastDeletedImg != null ? lastDeletedImg() : this.lastDeletedImg,
       selecting: selecting != null ? selecting() : this.selecting,
+      tagSelection: tagSelection != null ? tagSelection() : this.tagSelection,
     );
   }
 
@@ -61,5 +65,6 @@ class GalleryState extends Equatable {
         points,
         lastDeletedImg,
         selecting,
+        tagSelection,
       ];
 }
